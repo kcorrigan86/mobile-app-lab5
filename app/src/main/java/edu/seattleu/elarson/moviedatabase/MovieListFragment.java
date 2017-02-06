@@ -35,7 +35,7 @@ public class MovieListFragment extends ListFragment {
 
         // NOTE: If you create your database table incorrectly or want a fresh one,
         // uncomment the following line (and don't use the Up button):
-         getActivity().deleteDatabase("movies.db");
+        // getActivity().deleteDatabase("movies.db");
 
         // Create a new MovieDatabaseHelper
         MovieDatabaseHelper movieDatabaseHelper = new MovieDatabaseHelper(this.getActivity());
@@ -96,7 +96,7 @@ public class MovieListFragment extends ListFragment {
 
         private final MovieCursor mMovieCursor;
 
-        public MovieCursorAdapter(Context context, MovieCursor cursor) {
+        MovieCursorAdapter(Context context, MovieCursor cursor) {
             super(context, cursor, 0);
             mMovieCursor = cursor;
         }

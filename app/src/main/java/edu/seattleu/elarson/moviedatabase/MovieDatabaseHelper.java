@@ -9,22 +9,22 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 
-public class MovieDatabaseHelper extends SQLiteOpenHelper {
+class MovieDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "movies.db";
     private static final int DATABASE_VERSION = 1;
 
     private static final class Movies implements BaseColumns {
         private Movies() {}
-        public static final String TABLE_NAME = "movies";
-        public static final String TITLE = "title";
-        public static final String GENRE = "genre";
-        public static final String URL = "url";
-        public static final String RATING = "rating";
-        public static final String WATCHED = "watched";
+        static final String TABLE_NAME = "movies";
+        static final String TITLE = "title";
+        static final String GENRE = "genre";
+        static final String URL = "url";
+        static final String RATING = "rating";
+        static final String WATCHED = "watched";
     }
 
-    public MovieDatabaseHelper(Context context) {
+    MovieDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -48,7 +48,7 @@ public class MovieDatabaseHelper extends SQLiteOpenHelper {
 
     // Inserts a blank new movie into the database, returns the movie with
     // the id number set.
-    public Movie insertMovie() {
+    Movie insertMovie() {
         Movie movie = new Movie();
         ContentValues row = getMovieRow(movie);
         SQLiteDatabase db = getWritableDatabase();
@@ -61,7 +61,7 @@ public class MovieDatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Updates the movie in the database.
-    public void updateMovie(Movie movie) {
+    void updateMovie(Movie movie) {
         ContentValues row = getMovieRow(movie);
         String whereClause = Movies._ID + "=" + String.valueOf(movie.getId());
 
@@ -69,7 +69,7 @@ public class MovieDatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Returns a cursor that has a list for all movies.
-    public MovieCursor queryMovies() {
+    MovieCursor queryMovies() {
         // Get a cursor with a list for all movies
         @SuppressLint("Recycle") Cursor cursor = getReadableDatabase().query(
                 Movies.TABLE_NAME,      // table name
@@ -87,7 +87,7 @@ public class MovieDatabaseHelper extends SQLiteOpenHelper {
 
     // Queries the database for the movie with the corresponding id.  Returns the movie
     // or null if the movie does not exist in the database.
-    public Movie getMovie(long id) {
+    Movie getMovie(long id) {
         // Find the cursor with the corresponding id.
         String whereClause = Movies._ID + "=" + String.valueOf(id);
         Cursor cursor = getReadableDatabase().query(
@@ -102,19 +102,28 @@ public class MovieDatabaseHelper extends SQLiteOpenHelper {
 
         // Create a new MovieCursor from the cursor and get the movie from it
         MovieCursor movieCursor = new MovieCursor(cursor);
-        return movieCursor.getMovie();
+        movieCursor.moveToFirst();
+        Movie movie = movieCursor.getMovie();
+        
+        movieCursor.close();
+        cursor.close();
+
+        return movie;
     }
 
-    public static class MovieCursor extends CursorWrapper {
+    static class MovieCursor extends CursorWrapper {
 
-        public MovieCursor(Cursor cursor) {
+        MovieCursor(Cursor cursor) {
             super(cursor);
         }
 
         // Returns the movie at the current cursor location.  Returns null
         // if the cursor is before the first record or after the last record.
-        public Movie getMovie() {
-            if (isBeforeFirst() || isAfterLast()) return null;
+        Movie getMovie() {
+            if (isBeforeFirst() || isAfterLast()) {
+                return null;
+            }
+
             Movie movie = new Movie();
             movie.setId(getLong(getColumnIndex(Movies._ID)));
             movie.setTitle(getString(getColumnIndex(Movies.TITLE)));
