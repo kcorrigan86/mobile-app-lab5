@@ -104,7 +104,7 @@ class MovieDatabaseHelper extends SQLiteOpenHelper {
         MovieCursor movieCursor = new MovieCursor(cursor);
         movieCursor.moveToFirst();
         Movie movie = movieCursor.getMovie();
-        
+
         movieCursor.close();
         cursor.close();
 

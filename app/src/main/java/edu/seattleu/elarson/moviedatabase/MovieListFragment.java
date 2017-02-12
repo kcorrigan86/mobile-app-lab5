@@ -20,7 +20,7 @@ import static edu.seattleu.elarson.moviedatabase.MovieDatabaseHelper.MovieCursor
 
 public class MovieListFragment extends ListFragment {
     private static final int INSERT_NEW_MOVIE = 0;
-
+    private OnMovieListListener mListener;
     private MovieCursor mCursor;
 
     public static MovieListFragment newInstance() {
@@ -50,6 +50,29 @@ public class MovieListFragment extends ListFragment {
         setListAdapter(movieCursorAdapter);
     }
 
+    // Set up a listener for the activity that contains this fragment to allow an interaction
+    // in this fragment to be communicated to the activity; this method is called as soon as
+    // the fragment is associated with the activity
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnMovieListListener) {
+            mListener = (OnMovieListListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnMovieListListener");
+        }
+    }
+
+    // Done with the mListener; method called immediately prior to the fragment no longer being
+    // associated with its activity
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    // Do the final cleanup of the fragment's state
     @Override
     public void onDestroy() {
         mCursor.close();
@@ -62,32 +85,49 @@ public class MovieListFragment extends ListFragment {
         inflater.inflate(R.menu.menu_movie_list, menu);
     }
 
+    // If the add movie menu item is selected, let the activity containing this fragment
+    // know through the listener
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.menu_item_add:
-                Intent i = new Intent(getActivity(), MovieDetailActivity.class);
-                startActivityForResult(i, INSERT_NEW_MOVIE);
+                if (mListener != null) {
+                    mListener.onMovieInsert();
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
+    // If the movie edit item is selected, let the activity containing this fragment
+    // know through the listener
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         // The id argument will be the movie ID; CursorAdapter gives us this for free
-        Intent i = new Intent(getActivity(), MovieDetailActivity.class);
-        i.putExtra(MovieDetailFragment.EXTRA_ID, id);
-        startActivityForResult(i, INSERT_NEW_MOVIE);
+        if (mListener != null) {
+            mListener.onMovieEdit(id);
+        }
     }
 
+    // Update the UI when this fragment is resumed
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == INSERT_NEW_MOVIE) {
-            mCursor.requery();
-            ((MovieCursorAdapter)getListAdapter()).notifyDataSetChanged();
-        }
+    public void onResume() {
+        super.onResume();
+        updateUI();
+    }
+
+    // Update the user interface
+    public void updateUI() {
+        mCursor.requery();
+        ((MovieCursorAdapter)getListAdapter()).notifyDataSetChanged();
+    }
+
+    // This interface must be implemented by activities that contain this fragment
+    // to allow an interaction in this fragment to be communicated to the activity.
+    public interface OnMovieListListener {
+        public void onMovieInsert();
+        public void onMovieEdit(long id);
     }
 
     // A CursorAdapter binds each record of the cursor to a single view control within

@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/MovieDatabaseWk5Start.iml" filepath="$PROJECT_DIR$/MovieDatabaseWk5Start.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kellycorrigan_lab6.iml" filepath="$PROJECT_DIR$/kellycorrigan_lab6.iml" />
     </modules>
   </component>
 </project>
