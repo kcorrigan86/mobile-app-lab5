@@ -9,10 +9,15 @@ public class MovieListActivity extends SingleFragmentActivity
 
     private static final int INSERT_NEW_MOVIE = 0;
 
+    protected int getLayoutId() {
+        return R.layout.activity_master;
+    }
+
     @Override
     protected Fragment createFragment() {
         return MovieListFragment.newInstance();
     }
+
 
     /*
      * MovieListFragment.OnMovieListLisener functions
