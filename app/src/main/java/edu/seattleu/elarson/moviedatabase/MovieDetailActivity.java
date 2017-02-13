@@ -4,7 +4,8 @@ import android.app.Fragment;
 import android.content.Intent;
 
 
-public class MovieDetailActivity extends SingleFragmentActivity {
+public class MovieDetailActivity extends SingleFragmentActivity
+        implements MovieDetailFragment.OnMovieDetailListener {
 
     @Override
     protected Fragment createFragment() {
@@ -14,4 +15,10 @@ public class MovieDetailActivity extends SingleFragmentActivity {
     }
 
 
+    // MARK: -MovieDetailFragment.OnMovieDetailListener interface functions
+
+    // Required onMovieUpdate() method - empty method, because this class is required to
+    // implement the OnMovieDetailListener interface, but doesn't really need to utilize it
+    public void onMovieUpdate() {
+    }
 }

@@ -3,7 +3,6 @@ package edu.seattleu.elarson.moviedatabase;
 
 import android.app.ListFragment;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;

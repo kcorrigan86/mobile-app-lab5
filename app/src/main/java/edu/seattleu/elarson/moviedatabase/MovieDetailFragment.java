@@ -2,6 +2,7 @@ package edu.seattleu.elarson.moviedatabase;
 
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -19,11 +20,11 @@ import android.widget.Toast;
 
 public class MovieDetailFragment extends Fragment {
 
-    private static final String TAG = "Detail";
     public static final String EXTRA_ID = "edu.seattleu.elarson.moviedatabase.id";
 
     private Movie mMovie;
     private MovieDatabaseHelper mHelper;
+    private OnMovieDetailListener mListener;
 
     /**
      * Use this factory method to create a new instance of
@@ -154,9 +155,38 @@ public class MovieDetailFragment extends Fragment {
 
                 mHelper.updateMovie(mMovie);
                 Toast.makeText(getActivity(), "Update complete!", Toast.LENGTH_LONG).show();
+                mListener.onMovieUpdate();
             }
         });
 
         return v;
+    }
+
+    // Set up a listener for the activity that contains this fragment to allow an interaction
+    // in this fragment to be communicated to the activity; this method is called as soon as
+    // the fragment is associated with the activity
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnMovieDetailListener) {
+            mListener = (OnMovieDetailListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnMovieDetailListener");
+        }
+    }
+
+    // Done with the mListener; method called immediately prior to the fragment no longer being
+    // associated with its activity
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    // This interface must be implemented by activities that contain this fragment
+    // to allow an interaction in this fragment to be communicated to the activity.
+    public interface OnMovieDetailListener {
+        void onMovieUpdate();
     }
 }

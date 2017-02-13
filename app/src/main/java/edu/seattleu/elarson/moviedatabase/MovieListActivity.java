@@ -7,7 +7,8 @@ import android.content.Intent;
 
 
 public class MovieListActivity extends SingleFragmentActivity
-        implements MovieListFragment.OnMovieListListener {
+        implements MovieListFragment.OnMovieListListener,
+        MovieDetailFragment.OnMovieDetailListener {
 
     private static final int INSERT_NEW_MOVIE = 0;
 
@@ -22,7 +23,6 @@ public class MovieListActivity extends SingleFragmentActivity
 
 
     // MARK: -MovieListFragment.OnMovieListListener interface functions
-
 
     // Start MovieDetailActivity when a new movie is added; if a two-pane interface
     // is being used, set up the MovieDetailActivity in the second pane
@@ -52,8 +52,18 @@ public class MovieListActivity extends SingleFragmentActivity
     }
 
 
-    // MARK: -Private helper functions
+    // MARK: -MovieDetailFragment.OnMovieDetailListener interface functions
 
+    // Update the UI from MovieListFragment when the save button is pressed
+    public void onMovieUpdate() {
+        FragmentManager fm = getFragmentManager();
+        MovieListFragment movieListFragment = (MovieListFragment)
+                fm.findFragmentById(R.id.fragmentContainer);
+        movieListFragment.updateUI();
+    }
+
+
+    // MARK: -Private helper functions
 
     // Use a FragmentTransaction to remove the current fragment in the second pane (if
     // one exists) and add the new second pane fragment
