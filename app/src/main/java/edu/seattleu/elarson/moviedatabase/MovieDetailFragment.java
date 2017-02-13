@@ -44,6 +44,7 @@ public class MovieDetailFragment extends Fragment {
         // Required empty public constructor
     }
 
+    // Set up the movie database
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +62,7 @@ public class MovieDetailFragment extends Fragment {
         }
     }
 
+    // Set up the view
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -70,6 +72,7 @@ public class MovieDetailFragment extends Fragment {
         TextView idTextView = (TextView) v.findViewById(R.id.idTextView);
         idTextView.setText(String.valueOf(mMovie.getId()));
 
+        // Hook up the movie title EditText
         EditText movieEditText = (EditText) v.findViewById(R.id.titleEditText);
         movieEditText.setText(mMovie.getTitle());
         movieEditText.addTextChangedListener(new TextWatcher() {
@@ -84,6 +87,7 @@ public class MovieDetailFragment extends Fragment {
             }
         });
 
+        // Hook up the movie genre EditText
         EditText genreEditText = (EditText) v.findViewById(R.id.genreEditText);
         genreEditText.setText(mMovie.getGenre());
         genreEditText.addTextChangedListener(new TextWatcher() {
@@ -98,6 +102,7 @@ public class MovieDetailFragment extends Fragment {
             }
         });
 
+        // Hook up the URL EditText
         EditText urlEditText = (EditText) v.findViewById(R.id.urlEditText);
         urlEditText.setText(mMovie.getUrl());
         urlEditText.addTextChangedListener(new TextWatcher() {
@@ -112,6 +117,7 @@ public class MovieDetailFragment extends Fragment {
             }
         });
 
+        // Hook up the movie watched check box
         CheckBox watchedCheckBox = (CheckBox) v.findViewById(R.id.watchedCheckBox);
         watchedCheckBox.setChecked(mMovie.isWatched());
         watchedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -120,6 +126,7 @@ public class MovieDetailFragment extends Fragment {
             }
         });
 
+        // Hook up the movie rating bar
         RatingBar ratingRatingBar = (RatingBar) v.findViewById(R.id.ratingRatingBar);
         ratingRatingBar.setRating(mMovie.getRating());
         ratingRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -128,6 +135,7 @@ public class MovieDetailFragment extends Fragment {
             }
         });
 
+        // Hook up the view movie web site button
         Button viewWebButton = (Button) v.findViewById(R.id.viewWebButton);
         viewWebButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,6 +146,7 @@ public class MovieDetailFragment extends Fragment {
             }
         });
 
+        // Hook up the save button
         Button saveButton = (Button) v.findViewById(R.id.saveButton);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
