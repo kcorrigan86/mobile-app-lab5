@@ -18,7 +18,6 @@ import android.widget.TextView;
 import static edu.seattleu.elarson.moviedatabase.MovieDatabaseHelper.MovieCursor;
 
 public class MovieListFragment extends ListFragment {
-    private static final int INSERT_NEW_MOVIE = 0;
     private OnMovieListListener mListener;
     private MovieCursor mCursor;
 
@@ -118,6 +117,7 @@ public class MovieListFragment extends ListFragment {
 
     // Update the user interface
     public void updateUI() {
+        //noinspection deprecation
         mCursor.requery();
         ((MovieCursorAdapter)getListAdapter()).notifyDataSetChanged();
     }
@@ -125,8 +125,8 @@ public class MovieListFragment extends ListFragment {
     // This interface must be implemented by activities that contain this fragment
     // to allow an interaction in this fragment to be communicated to the activity.
     public interface OnMovieListListener {
-        public void onMovieInsert();
-        public void onMovieEdit(long id);
+        void onMovieInsert();
+        void onMovieEdit(long id);
     }
 
     // A CursorAdapter binds each record of the cursor to a single view control within
