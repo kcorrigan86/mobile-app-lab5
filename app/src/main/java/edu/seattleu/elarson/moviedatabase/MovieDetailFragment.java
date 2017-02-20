@@ -25,6 +25,7 @@ public class MovieDetailFragment extends Fragment {
     private Movie mMovie;
     private MovieDatabaseHelper mHelper;
     private OnMovieDetailListener mListener;
+    private EditText mUrlEditText;
 
     /**
      * Use this factory method to create a new instance of
@@ -104,9 +105,9 @@ public class MovieDetailFragment extends Fragment {
         });
 
         // Hook up the URL EditText
-        EditText urlEditText = (EditText) v.findViewById(R.id.urlEditText);
-        urlEditText.setText(mMovie.getUrl());
-        urlEditText.addTextChangedListener(new TextWatcher() {
+        mUrlEditText = (EditText) v.findViewById(R.id.urlEditText);
+        mUrlEditText.setText(mMovie.getUrl());
+        mUrlEditText.addTextChangedListener(new TextWatcher() {
             public void onTextChanged(CharSequence c, int start, int before, int count) {
                 mMovie.setUrl(c.toString());
             }
@@ -200,5 +201,10 @@ public class MovieDetailFragment extends Fragment {
     // to allow an interaction in this fragment to be communicated to the activity.
     public interface OnMovieDetailListener {
         void onMovieUpdate();
+    }
+
+    // Set the url EditText to the passed-in url (from the pick url alert dialog)
+    public void selectUrl(String url) {
+        mUrlEditText.setText(url);
     }
 }

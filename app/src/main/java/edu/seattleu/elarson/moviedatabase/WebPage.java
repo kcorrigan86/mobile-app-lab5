@@ -3,8 +3,8 @@ package edu.seattleu.elarson.moviedatabase;
 // Holds data about a web page
 class WebPage {
 
-    private String mUrl;
-    private String mTitle;
+    private final String mUrl;
+    private final String mTitle;
 
     // Initialize variables
     WebPage(String url, String title) {

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 // permits global access using the get method
 class WebPageList {
     private static WebPageList sWebPageList = null;
-    private ArrayList<WebPage> mWebPages;
+    private final ArrayList<WebPage> mWebPages;
 
     // Create an ArrayList of URLs
     private WebPageList() {
@@ -61,5 +61,10 @@ class WebPageList {
         }
 
         return titles;
+    }
+
+    // Retrieve a url based on the passed-in index
+    String getUrl(int index) {
+        return mWebPages.get(index).getUrl();
     }
 }

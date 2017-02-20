@@ -70,6 +70,13 @@ public class MovieListFragment extends ListFragment {
         mListener = null;
     }
 
+    // This interface must be implemented by activities that contain this fragment
+    // to allow an interaction in this fragment to be communicated to the activity.
+    public interface OnMovieListListener {
+        void onMovieInsert();
+        void onMovieEdit(long id);
+    }
+
     // Do the final cleanup of the fragment's state
     @Override
     public void onDestroy() {
@@ -120,13 +127,6 @@ public class MovieListFragment extends ListFragment {
         //noinspection deprecation
         mCursor.requery();
         ((MovieCursorAdapter)getListAdapter()).notifyDataSetChanged();
-    }
-
-    // This interface must be implemented by activities that contain this fragment
-    // to allow an interaction in this fragment to be communicated to the activity.
-    public interface OnMovieListListener {
-        void onMovieInsert();
-        void onMovieEdit(long id);
     }
 
     // A CursorAdapter binds each record of the cursor to a single view control within

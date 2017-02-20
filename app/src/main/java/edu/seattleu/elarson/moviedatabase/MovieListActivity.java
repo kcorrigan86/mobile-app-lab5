@@ -8,9 +8,11 @@ import android.content.Intent;
 
 public class MovieListActivity extends SingleFragmentActivity
         implements MovieListFragment.OnMovieListListener,
-        MovieDetailFragment.OnMovieDetailListener {
+        MovieDetailFragment.OnMovieDetailListener,
+        PickUrlDialogFragment.OnPickUrlDialogListener {
 
     private static final int INSERT_NEW_MOVIE = 0;
+    private MovieDetailFragment mMovieDetailFragment;
 
     protected int getLayoutId() {
         return R.layout.activity_master;
@@ -72,9 +74,16 @@ public class MovieListActivity extends SingleFragmentActivity
         FragmentTransaction ft = fm.beginTransaction();
         Fragment oldFragment =
                 fm.findFragmentById(R.id.detailFragmentContainer);
-        Fragment newFragment = MovieDetailFragment.newInstance(id);
+        mMovieDetailFragment = MovieDetailFragment.newInstance(id);
         if (oldFragment != null) ft.remove(oldFragment);
-        ft.add(R.id.detailFragmentContainer, newFragment);
+        ft.add(R.id.detailFragmentContainer, mMovieDetailFragment);
         ft.commit();
+    }
+
+    // MARK: -MovieDetailFragment.OnPickUrlListener interface method
+
+    // Set the url EditText to the passed-in url (from the pick url alert dialog)
+    public void selectUrl(String url) {
+        mMovieDetailFragment.selectUrl(url);
     }
 }
