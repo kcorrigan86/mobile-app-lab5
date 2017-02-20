@@ -159,6 +159,18 @@ public class MovieDetailFragment extends Fragment {
             }
         });
 
+        // Hook up the pick URL button
+        Button pickUrlButton = (Button) v.findViewById(R.id.pickUrlButton);
+        pickUrlButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // Show the pick url fragment
+                PickUrlDialogFragment pickUrlDialogFragment = new PickUrlDialogFragment();
+                pickUrlDialogFragment.show(getFragmentManager(), "dialog");
+            }
+        });
+
         return v;
     }
 
